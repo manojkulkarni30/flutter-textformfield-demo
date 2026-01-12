@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final _passCtrl = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  bool _hasAttemptedSubmit = false;
   @override
   void dispose() {
     _emailCtrl.dispose();
@@ -22,6 +23,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _submitForm() async {
+    setState(() {
+      _hasAttemptedSubmit = true;
+    });
+
     if (_formKey.currentState!.validate()) {
       // Step 1: Set loading to true before starting the async work
       setState(() {
@@ -48,68 +53,87 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: .center,
-              spacing: 16,
-              children: [
-                Text(
-                  'Welcome Back!',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                TextFormField(
-                  controller: _emailCtrl,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    hintText: 'name@example.com',
-                    prefixIcon: const Icon(Icons.email),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: Form(
+              autovalidateMode: _hasAttemptedSubmit
+                  ? AutovalidateMode.onUserInteraction
+                  : AutovalidateMode.disabled,
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: .center,
+                spacing: 16,
+                children: [
+                  Text(
+                    'Welcome Back!',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: FormValidators.validateEmail,
-                ),
-                TextFormField(
-                  controller: _passCtrl,
-                  obscureText: _isPasswordHidden,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    prefixIcon: const Icon(Icons.lock),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                  TextFormField(
+                    textInputAction: TextInputAction.next,
+                    controller: _emailCtrl,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      hintText: 'name@example.com',
+                      prefixIcon: const Icon(Icons.email),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordHidden = !_isPasswordHidden;
-                        });
-                      },
-                      icon: _isPasswordHidden
-                          ? Icon(Icons.visibility_off)
-                          : Icon(Icons.visibility),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: FormValidators.validateEmail,
+                  ),
+                  TextFormField(
+                    textInputAction: TextInputAction.done,
+                    controller: _passCtrl,
+                    obscureText: _isPasswordHidden,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      prefixIcon: const Icon(Icons.lock),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordHidden = !_isPasswordHidden;
+                          });
+                        },
+                        icon: _isPasswordHidden
+                            ? Icon(Icons.visibility_off)
+                            : Icon(Icons.visibility),
+                      ),
+                    ),
+                    validator: FormValidators.validatePassword,
+                    onFieldSubmitted: (value) {
+                      _submitForm();
+                    },
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: _isLoading ? null : _submitForm,
+                      child: _isLoading
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : const Text('Login'),
                     ),
                   ),
-                  validator: FormValidators.validatePassword,
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: _isLoading ? null : _submitForm,
-                    child: _isLoading
-                        ? const CircularProgressIndicator()
-                        : const Text('Login'),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
