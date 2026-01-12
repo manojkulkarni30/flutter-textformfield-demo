@@ -1,16 +1,35 @@
 # flutter_textformfield_demo
 
-A new Flutter project.
+A small demo project and companion materials for the "Mastering Text Input In Flutter – Step by Step Series".
 
-## Getting Started
+What you'll learn
 
-This project is a starting point for a Flutter application.
+- Why prefer TextFormField over TextField when building forms.
+- How to implement form validation using Form and GlobalKey.
+- 3 UX improvements to enhance a login form (focus management, input feedback, keyboard actions).
 
-A few resources to get you started if this is your first Flutter project:
+YouTube resources
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Playlist (Mastering Text Input In Flutter – Step by Step Series):
+  https://bit.ly/3NGpJPm
+- Channel (search / subscribe):
+  https://bit.ly/41Ryons
+- Key videos:
+  - Why use TextFormField vs TextField:
+    https://bit.ly/4jAttOE
+  - Implementing form validation in Flutter:
+    https://bit.ly/49yhiNs
+  - 3 UX improvements for a login form in Flutter:
+    (COMMING SOON)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Official docs
+
+- TextField: https://api.flutter.dev/flutter/material/TextField-class.html
+- TextFormField: https://api.flutter.dev/flutter/material/TextFormField-class.html
+- Form widget: https://api.flutter.dev/flutter/widgets/Form-class.html
+- GlobalKey: https://api.flutter.dev/flutter/widgets/GlobalKey-class.html
+
+Getting started
+
+- Run the demo app to inspect examples of TextFormField with validation and the UX improvements demonstrated in the videos.
+- Refer to the playlist and docs above for step-by-step explanations and code walkthroughs.
