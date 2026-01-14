@@ -19,8 +19,8 @@ YouTube resources
     https://bit.ly/4jAttOE
   - Implementing form validation in Flutter:
     https://bit.ly/49yhiNs
-  - 3 UX improvements for a login form in Flutter:
-    (COMMING SOON)
+  - 3 Login UI Fixes You’re Probably Missing:
+    https://bit.ly/3LyJ5oY
 
 Official docs
 
